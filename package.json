@@ -4,11 +4,12 @@
   "description": "Implementação do https://tabnews.com.br",
   "main": "index.js",
   "scripts": {
-    "dev": "next dev",
+    "dev": "npm run infra:up && next dev",
     "lint:check": "prettier --check .",
     "lint:fix": "prettier --write .",
     "test": "jest",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "infra:up": "docker compose -f infra/compose.yaml up -d"
   },
   "author": "",
   "license": "MIT",
