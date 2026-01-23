@@ -26,7 +26,7 @@ function getSSLConfig() {
     };
   }
 
-  return process.env.ENV == "production" ? true : false;
+  return process.env.ENV === "development" ? false : true;
 }
 
 async function getNewClient() {
@@ -37,6 +37,7 @@ async function getNewClient() {
     database: process.env.POSTGRES_DB,
     password: process.env.POSTGRES_PASSWORD,
     ssl: getSSLConfig(),
+    ssl: true,
   });
 
   await client.connect();
