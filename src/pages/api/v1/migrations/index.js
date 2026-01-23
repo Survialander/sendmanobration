@@ -6,7 +6,7 @@ export default async function migrations(request, response) {
   const dbClient = await database.getNewClient();
 
   const migrationsConfig = {
-    dbClient,
+    dbClient: dbClient,
     dryRun: true,
     dir: join("infra", "migrations"),
     direction: "up",
@@ -20,7 +20,7 @@ export default async function migrations(request, response) {
     const pendingMigrations = await migrationRunner({
       ...migrationsConfig,
     });
-    dbClient.end();
+    await dbClient.end();
     return response.status(200).json(pendingMigrations);
   }
 
@@ -29,13 +29,13 @@ export default async function migrations(request, response) {
       ...migrationsConfig,
       dryRun: false,
     });
-    dbClient.end();
+
+    await dbClient.end();
 
     return migratedMigrations.length === 0
       ? response.status(200).json(migratedMigrations)
       : response.status(201).json(migratedMigrations);
   }
 
-  dbClient.end();
   return response.status(405).end();
 }
