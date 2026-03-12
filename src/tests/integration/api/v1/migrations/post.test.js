@@ -1,6 +1,10 @@
 import database from "infra/database";
+import orchestrator from "src/tests/orchestrator";
 
-beforeAll(database.cleanDatabase);
+beforeAll(async () => {
+  await orchestrator.waitForServices();
+  await database.cleanDatabase();
+});
 
 test("POST to /api/v1/migrations should return 200", async () => {
   const response = await fetch("http://localhost:3000/api/v1/migrations", {
