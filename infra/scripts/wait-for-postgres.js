@@ -1,4 +1,3 @@
-// checar se o docker do banco está up e aceitando conexões
 const { exec } = require("node:child_process");
 
 function waitForPostgres() {
